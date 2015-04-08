@@ -30,7 +30,7 @@ The department is propagated automatically to the generated supplier invoice.
 
 It is filled in by default with the department of the user.
 """,
-    'depends': ['invoice_department', 'hr', 'purchase'],
+    'depends': ['invoice_department', 'hr', 'purchase','stock_department'],
     'data': ['view/purchase_order.xml',
              'view/purchase_order_line.xml'],
     'installable': True,

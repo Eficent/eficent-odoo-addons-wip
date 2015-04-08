@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-# Authors: Leonardo Pistone, Jordi Ballester Alomar
-# Copyright 2014 Camptocamp SA (http://www.camptocamp.com)
+# Authors: Jordi Ballester Alomar
 # Copyright 2015 Eficent (http://www.eficent.com)
 #
 # This program is free software: you can redistribute it and/or modify
@@ -15,15 +14,22 @@
 #
 # You should have received a copy of the GNU Affero General Public Lice
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+{
+    'name': 'Stock with Department Categorization',
+    'version': '1.0',
+    'category': 'Generic Modules/Sales & Purchases',
+    'author': "Eficent,Odoo Community Association (OCA)",
+    "license": "AGPL-3",
+    'website': 'http://camptocamp.com',
+    'description': """\
+Stock with Department Categorization
+========================================
+Add the department on stock pickings and stock moves.
+The department is propagated automatically to the generated invoice.
 
-from openerp.osv import orm, fields
-
-class stock_picking(orm.Model):
-    _inherit = 'stock.picking'
-
-    def _prepare_invoice(self, cr, uid, picking, partner, inv_type, journal_id, context=None):
-        invoice_vals = super(stock_picking, self)._prepare_invoice(cr, uid, picking, partner, inv_type, journal_id, context=context)
-        if picking.purchase_id:
-            invoice_vals['department_id'] = \
-                picking.purchase_id.department_id.id
-        return invoice_vals
+It is filled in by default with the department of the user.
+""",
+    'depends': ['hr', 'stock'],
+    'data': ['view/stock.xml'],
+    'installable': True,
+}

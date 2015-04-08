@@ -19,4 +19,30 @@
 #
 ##############################################################################
 
-from . import project_task
+from openerp.tools.translate import _
+from openerp.osv import fields, orm
+
+
+class company_segment(orm.Model):
+
+    _name = 'company.segment'
+    _description = 'Company Segment'
+
+    _columns = {
+        'name': fields.char('Name', size=256, required=True),
+        'code': fields.char('Code', size=32, required=True),
+        'active': fields.boolean('Active'),
+        'company_id': fields.many2one('res.company', 'Company', required=True),
+    }
+
+    _defaults = {
+        'active': True,
+        'company_id': lambda s, cr, uid,
+        c: s.pool.get('res.company')._company_default_get(
+            cr, uid, 'account.account', context=c),
+    }
+
+    _sql_constraints = [
+        ('code_company_uniq', 'unique (code,company_id)',
+         'The code of the segment must be unique per company !')
+    ]

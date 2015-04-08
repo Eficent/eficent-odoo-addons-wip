@@ -18,16 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.osv import fields, orm
-
-
-class project_task(orm.Model):
-    
-    _inherit = 'project.task'
-
-    _columns = {
-        'product_quantity': fields.float('End product quantity'),
-        'uom_id': fields.many2one('product.uom', 'End product UoM',
-                                  required=True),
-    }
+from . import analytic_resource_plan
+from . import project_task

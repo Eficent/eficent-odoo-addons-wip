@@ -24,9 +24,7 @@ class purchase_order(orm.Model):
     _inherit = 'purchase.order'
 
     _columns = {
-        'department_id': fields.many2one(
-            'hr.department',
-            string='Department'),
+        'department_id': fields.many2one('hr.department', string='Department'),
     }
 
     def _get_my_department(self, cr, uid, ids, context=None):
@@ -43,21 +41,6 @@ class purchase_order(orm.Model):
         'department_id': _get_my_department,
     }
 
-    def onchange_user_id(self, cr, uid, ids, user_id, context=None):
-        """ Return the department depending of the user.
-        @param user_id: user id
-        """
-        context = context or {}
-        res = {}
-        ru_obj = self.pool.get('res.users')
-        if user_id:
-            ru_brw = ru_obj.browse(cr, uid, user_id, context=context)
-            department_id = (ru_brw.employee_ids
-                and ru_brw.employee_ids[0].department_id
-                and ru_brw.employee_ids[0].department_id.id or False)
-            res.update({'value': {'department_id': department_id}})
-        return res
-
     def action_invoice_create(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -66,16 +49,38 @@ class purchase_order(orm.Model):
             cr, uid, ids, context=context)
         for order in self.browse(cr, uid, ids, context=context):
             for invoice in order.invoice_ids:
-                invoice_obj.write(cr, uid, [invoice.id],
-                                  order.department_id, context=context)
+                if order.department_id:
+                    invoice_obj.write(
+                        cr, uid, [invoice.id],
+                        {'department_id': order.department_id.id},
+                        context=context)
         return inv_id
+
+    def _prepare_order_picking(self, cr, uid, order, context=None):
+        if context is None:
+            context = {}
+        res = super(purchase_order, self)._prepare_order_picking(
+            cr, uid, order, context=context)
+        if order.department_id:
+            res['department_id'] = order.department_id.id
+        return res
+
+    def _prepare_order_line_move(self, cr, uid, order, order_line, picking_id, context=None):
+        if context is None:
+            context = {}
+        res = super(purchase_order, self)._prepare_order_line_move(
+            cr, uid, order, order_line, picking_id, context=context)
+        if order.department_id:
+            res['department_id'] = order.department_id.id
+        return res
+
 
 class purchase_order_line(orm.Model):
     _inherit = 'purchase.order.line'
 
     _columns = {
         'department_id': fields.related('order_id',
-            'department_id', type='many2one',
-            relation='hr.department',
-            string='Department', readonly=True),
+                                        'department_id', type='many2one',
+                                        relation='hr.department',
+                                        string='Department', readonly=True),
     }

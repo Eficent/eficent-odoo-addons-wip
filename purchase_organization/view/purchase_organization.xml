@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_purchase_organization_form" model="ir.ui.view">
+            <field name="name">purchase.organization.form</field>
+            <field name="model">purchase.organization</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Organization" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                        <field name="partner_id"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_purchase_organization_tree" model="ir.ui.view">
+            <field name="name">purchase.organization.tree</field>
+            <field name="model">purchase.organization</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Organization">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_purchase_organization_search" model="ir.ui.view">
+            <field name="name">purchase.organization.search</field>
+            <field name="model">purchase.organization</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Organization">
+                    <field name="name"
+                           filter_domain="['|', ('name','ilike',self), ('code','ilike',self)]"
+                           string="Purchase Organization"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_purchase_organization_tree" model="ir.actions.act_window">
+            <field name="name">Purchase Organizations</field>
+            <field name="res_model">purchase.organization</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start a new Purchase Organization.
+              </p><p>
+                Define purchasing organizations according to the following criteria:
+                - Business units
+                - Procurement policies
+                - Geographical areas
+                - Products procured
+                - The ability to maintain purchasing-specific data, such as prices.
+              </p>
+            </field>
+        </record>
+
+       <menuitem action="action_purchase_organization_tree"
+                 id="manu_action_purchase_organization_tree"
+                 parent="base.menu_res_company_global" sequence="18"/>
+    </data>
+</openerp>

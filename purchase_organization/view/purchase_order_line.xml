@@ -8,7 +8,7 @@
       <field name="inherit_id" ref="purchase.purchase_order_line_tree" />
       <field name="arch" type="xml">
         <field name="partner_id" position="after">
-          <field name="department_id" />
+          <field name="purchase_organization_id" />
         </field>
       </field>
     </record>
@@ -19,7 +19,7 @@
       <field name="inherit_id" ref="purchase.purchase_order_line_form" />
       <field name="arch" type="xml">
         <field name="price_unit" position="after">
-          <field name="department_id" />
+          <field name="purchase_organization_id" />
         </field>
       </field>
     </record>
@@ -30,10 +30,10 @@
       <field name="inherit_id" ref="purchase.purchase_order_line_search" />
       <field name="arch" type="xml">
         <xpath expr="//filter[@string='Supplier']" position="after">
-          <filter string="Department" context="{'group_by':'department_id'}"/>
+          <filter string="Department" context="{'group_by':'purchase_organization_id'}"/>
         </xpath>
         <field name="partner_id" position="after">
-          <field name="department_id"/>
+          <field name="purchase_organization_id"/>
         </field>
       </field>
     </record>

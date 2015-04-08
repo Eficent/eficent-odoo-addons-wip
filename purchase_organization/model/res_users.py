@@ -19,26 +19,24 @@
 #
 ##############################################################################
 
-{
-    "name": "Project Resource Unit",
-    "version": "1.0",
-    "author": "Eficent",
-    "website": "www.eficent.com",
-    "category": "Generic Modules/Projects & Services",
-    "depends": ["sale","analytic", "analytic_plan", "sale_order_line_analytic"],
-    "description": """
-    """,
-    "init_xml": [],
-    "update_xml": [        
-        "view/project_task_view.xml",
-        "view/resource_unit_view.xml",
-    ],
-    'demo_xml': [
+from openerp.osv import fields, orm
 
-    ],
-    'test':[
-    ],
-    'installable': True,
-    'active': False,
-    'certificate': '',
-}
+
+class res_users(orm.Model):
+
+    _inherit = 'res.users'
+
+    _columns = {
+        'purchase_organization_ids': fields.many2many(
+            'purchase.organization', 'purchase_organization_users_rel',
+            'user_id', 'poid',
+            'Purchase organizations'),
+        'default_purchase_organization_id': fields.many2one(
+            'purchase.organization', 'Default Purchase Organization')
+    }
+
+    def purchase_organization_default_get(self, cr, uid, uid2, context=None):
+        if not uid2:
+            uid2 = uid
+        user = self.pool.get('res.users').browse(cr, uid, uid2, context)
+        return user.default_purchase_organization_id.id or False

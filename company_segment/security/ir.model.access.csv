@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_company_segment_account_manager,company.segment account.manager,model_company_segment,base.group_erp_manager,1,1,1,1
+access_account_company_segment_user,company.segment user,model_company_segment,,1,0,0,0

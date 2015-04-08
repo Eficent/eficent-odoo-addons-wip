@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_project_task_form_resource_unit" model="ir.ui.view">
+            <field name="name">project.task.form.resource.unit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <page string="Extra Info" position="after">
+                    <page string="Resources">
+                        <group>
+                            <field name="product_quantity"/>
+                            <field name="product_uom_id"/>
+                        </group>
+                        <group>
+                            <field name="resource_unit_ids">
+                                <tree string="Resource Units" editable="top">
+                                    <field name="product_id"/>
+                                    <field name="uom_id"/>
+                                    <field name="unit_cost"/>
+                                    <field name="unit_quantity"/>
+                                    <field name="cost" sum="Cost"/>
+                                    <field name="total_quantity"/>
+                                    <field name="total_cost" sum="Total cost"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                    <page string="Resource plan lines">
+                        <group>
+                            <field name="resource_plan_line_ids" nolabel="1">
+                                <tree string="Resource Plan Lines">
+                                    <field name="date"/>
+                                    <field name="product_id"/>
+                                    <field name="unit_amount"/>
+                                    <field name="product_uom_id"/>
+                                    <button name="action_button_confirm" icon="gtk-apply" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+                                    <button name="action_button_draft" icon="gtk-convert" states="confirm,cancel" string="Reset to Draft" type="object"/>
+                                    <button name="action_button_cancel" icon="gtk-cancel" states="draft,confirm" string="Cancel" type="object"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+
+        <record id="view_task_tree2_resource_unit" model="ir.ui.view">
+            <field name="name">project.task.tree.resource.unit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="product_quantity"/>
+                    <field name="product_uom_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Project Task Kanban View -->
+        <record model="ir.ui.view" id="view_task_kanban_resource_unit">
+            <field name="name">project.task.kanban.resource.unit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']"
+                       position="after">
+                    <br/><field name="product_quantity"/><b> </b><field
+                        name="product_uom_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

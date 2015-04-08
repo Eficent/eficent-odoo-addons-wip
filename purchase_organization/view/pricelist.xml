@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="product_pricelist_version_form_view" model="ir.ui.view">
+            <field name="name">product.pricelist.version.form</field>
+            <field name="model">product.pricelist.version</field>
+            <field name="inherit_id" ref="product.product_pricelist_version_form_view"/>
+            <field name="arch" type="xml">
+                <field name="date_end" position="after">
+                    <field name="purchase_organization_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="product_pricelist_version_tree_view" model="ir.ui.view">
+            <field name="name">product.pricelist.version.tree</field>
+            <field name="model">product.pricelist.version</field>
+            <field name="inherit_id" ref="product.product_pricelist_version_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="date_end" position="after">
+                    <field name="purchase_organization_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_pricelist_view" model="ir.ui.view">
+            <field name="name">product.pricelist.form</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <xpath
+                        expr="//field[@name='version_id']/form//field[@name='date_end']" position="after">
+                    <field name="purchase_organization_id"/>
+                </xpath>
+                <xpath
+                        expr="//field[@name='version_id']/tree//field[@name='date_end']" position="after">
+                    <field name="purchase_organization_id"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</openerp>
