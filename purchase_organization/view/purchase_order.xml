@@ -19,9 +19,13 @@
           <field name="inherit_id" ref="purchase.purchase_order_form" />
           <field name="arch" type="xml">
             <field name="partner_ref" position="after">
-              <field name="purchase_organization_id"
-                     on_change="onchange_purchase_organization(purchase_organization_id)"/>
+              <field name="purchase_organization_id"/>
             </field>
+            <xpath expr="//field[@name='order_line']"
+                   position="attributes">
+                <attribute name="context">{'purchase_organization_id':
+                    purchase_organization_id}</attribute>
+            </xpath>
           </field>
         </record>
 
