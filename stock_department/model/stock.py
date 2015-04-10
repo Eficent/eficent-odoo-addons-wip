@@ -45,7 +45,6 @@ class stock_move(orm.Model):
         'department_id': _get_department,
     }
 
-
     def onchange_department_id(self, cr, uid, ids, department_id,
                                context=None):
         context = context or {}
