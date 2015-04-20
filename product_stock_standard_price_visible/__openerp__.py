@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Jordi Ballester (Eficent)
-#    Copyright 2015 Eficent
+#    Copyright (C) 2014 Eficent (<http://www.eficent.com/>)
+#             <contact@eficent.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,12 +18,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
+{
+    'name': 'Product display cost',
+    'version': '1.0',
+    'author': 'Eficent',
+    "website": "www.eficent.com",
+    'category': 'Products',
+    'depends': ['product', 'stock'],
+    'demo': [],
+    'description': """
+Product display cost
+====================
+This module helps to better classify manufacturers by providing an indicator
+in the partner.
 
+In the product, a user can only select a manufacturer from the list of partners
+where this indicator has been set.
 
-class AccountInvoice(orm.Model):
-    _inherit = "account.invoice"
-    _columns = {
-        'operating_unit_id': fields.many2one('operating.unit',
-                                                    'Operating Unit'),
-    }
+    """,
+    'data': [
+        'view/partner_view.xml',
+    ],
+    'auto_install': False,
+    'installable': True,
+    'images': [],
+}
