@@ -17,6 +17,7 @@
                             <field name="resource_unit_ids">
                                 <tree string="Resource Units" editable="top">
                                     <field name="product_id"/>
+                                    <field name="categ_id"/>
                                     <field name="uom_id"/>
                                     <field name="unit_cost"/>
                                     <field name="unit_quantity"/>
@@ -73,6 +74,64 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_task_resource_unit_tree" model="ir.ui.view">
+            <field name="name">project.task.resource.unit.tree</field>
+            <field name="model">project.task.resource.unit</field>
+            <field name="arch" type="xml">
+                <tree string="Task Resource Units">
+                    <field name="task_id"/>
+                    <field name="product_id"/>
+                    <field name="uom_id"/>
+                    <field name="unit_cost"/>
+                    <field name="unit_quantity"/>
+                    <field name="cost" sum="Cost"/>
+                    <field name="total_quantity"/>
+                    <field name="total_cost" sum="Total cost"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_task_resource_unit_form" model="ir.ui.view">
+            <field name="name">project.task.resource.unit.form</field>
+            <field name="model">project.task.resource.unit</field>
+            <field name="arch" type="xml">
+                <form string="Task Resource Units">
+                    <field name="task_id"/>
+                    <field name="product_id"/>
+                    <field name="uom_id"/>
+                    <field name="unit_cost"/>
+                    <field name="unit_quantity"/>
+                    <field name="cost" sum="Cost"/>
+                    <field name="total_quantity"/>
+                    <field name="total_cost" sum="Total cost"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_task_resource_unit_search" model="ir.ui.view">
+            <field name="name">project.task.resource.unit.search</field>
+            <field name="model">project.task.resource.unit</field>
+            <field name="arch" type="xml">
+                <search string="Taak Resource Units">
+                    <field name="task_id"/>
+                    <field name="product_id"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_view_task_resource_unit"
+                model="ir.actions.act_window">
+            <field name="name">Task Resource Units</field>
+            <field name="res_model">project.task.resource.unit</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_task_resource_unit_search"/>
+        </record>
+
+        <menuitem action="action_view_task_resource_unit"
+                  id="menu_action_view_task_resource_unit"
+                  parent="project.menu_project_management" sequence="6"/>
 
     </data>
 </openerp>

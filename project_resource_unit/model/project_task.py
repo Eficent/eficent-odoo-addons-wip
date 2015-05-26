@@ -93,6 +93,9 @@ class project_task_resource_unit(orm.Model):
             'project.task', 'Task', ondelete='cascade', required=True),
         'product_id': fields.many2one(
             'product.product', 'Product', required=True),
+        'categ_id': fields.related('product_id', 'categ_id', string="Category",
+                                   type='many2one', relation='product.category',
+                                   readonly=True),
         'uom_id': fields.related('product_id', 'uom_id', string="UoM",
                                  type='many2one', relation='product.uom',
                                  readonly=True),

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2015 Eficent (<http://www.eficent.com/>)
-#              <contact@eficent.com>
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,25 +19,7 @@
 #
 ##############################################################################
 
-{
-    "name": "Project Resource Unit",
-    "version": "1.0",
-    "author": "Eficent",
-    "website": "www.eficent.com",
-    "category": "Generic Modules/Projects & Services",
-    "depends": ["project","product","analytic_resource_plan_task"],
-    "description": """
-    """,
-    "init_xml": [],
-    "update_xml": [        
-        "view/project_task_view.xml",
-    ],
-    'demo_xml': [
+import timesheet_report
+import hr_timesheet_report
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
-    ],
-    'test':[
-    ],
-    'installable': True,
-    'active': False,
-    'certificate': '',
-}

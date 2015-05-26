@@ -18,26 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from . import sale
+from . import product
 
-{
-    "name": "Project Resource Unit",
-    "version": "1.0",
-    "author": "Eficent",
-    "website": "www.eficent.com",
-    "category": "Generic Modules/Projects & Services",
-    "depends": ["project","product","analytic_resource_plan_task"],
-    "description": """
-    """,
-    "init_xml": [],
-    "update_xml": [        
-        "view/project_task_view.xml",
-    ],
-    'demo_xml': [
-
-    ],
-    'test':[
-    ],
-    'installable': True,
-    'active': False,
-    'certificate': '',
-}

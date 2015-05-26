@@ -19,25 +19,23 @@
 #
 ##############################################################################
 
-{
-    "name": "Project Resource Unit",
-    "version": "1.0",
-    "author": "Eficent",
-    "website": "www.eficent.com",
-    "category": "Generic Modules/Projects & Services",
-    "depends": ["project","product","analytic_resource_plan_task"],
-    "description": """
-    """,
-    "init_xml": [],
-    "update_xml": [        
-        "view/project_task_view.xml",
-    ],
-    'demo_xml': [
+from openerp.osv import orm, fields
+import openerp.addons.decimal_precision as dp
 
-    ],
-    'test':[
-    ],
-    'installable': True,
-    'active': False,
-    'certificate': '',
-}
+
+class Product(orm.Model):
+    _inherit = "product.product"
+
+    _columns = {
+        'max_sale_discount': fields.float(
+            'Maximum Discount (%)',
+            digits_compute=dp.get_precision('Discount'),
+            help="Maximum sales discount defined for this product. Sales "
+                 "quotations containing products where the discount of the "
+                 "line exceeds the discount defined in the product will be "
+                 "blocked.")
+    }
+
+    _defaults = {
+        'max_sale_discount': 0.0
+    }
