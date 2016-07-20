@@ -24,7 +24,7 @@
     'version': '1.0',
     'category': 'Human Resources',
     'description': '''
-Change the state of the payslips selected in list view
+Change the state of selected payslips in list view
 ''',
     'author': "Eficent",
     'website': 'http://www.eficent.com',

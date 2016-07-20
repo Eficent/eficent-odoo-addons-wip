@@ -18,10 +18,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-
+from openerp.exceptions import Warning
 
 class hr_payslip_change_state(osv.osv_memory):
 
@@ -36,7 +35,8 @@ class hr_payslip_change_state(osv.osv_memory):
             ('cancel', 'Rejected'),
         ], 'Status',
             help='* When the payslip is created the status is \'Draft\'.\
-            \n* If the payslip is under verification, the status is \'Waiting\'. \
+            \n* If the payslip is under verification, the status is '
+                 '\'Waiting\'. \
             \n* If the payslip is confirmed then status is set to \'Done\'.\
             \n* When user cancel payslip the status is \'Rejected\'.'),
     }
@@ -49,6 +49,23 @@ class hr_payslip_change_state(osv.osv_memory):
         payslip_obj = self.pool.get('hr.payslip')
         new_state = data.get('state', False)
         records = payslip_obj.browse(cr, uid, record_ids, context=context)
+
+        for rec in records:
+            if new_state == 'draft' and rec.state != 'cancel':
+                raise Warning(_("Only rejected payslips can be reset to "
+                                "draft, the payslip %s is in "
+                                "%s state" % (rec.name, rec.state)))
+            elif new_state == 'verify' and rec.state != 'draft':
+                raise Warning(_("Only draft payslips can be verified,"
+                                "the payslip %s is in "
+                                "%s state" % (rec.name, rec.state)))
+            elif new_state == 'done' and rec.state not in ('verify','draft'):
+                raise Warning(_("Only payslips in states verify or draft "
+                                "can be confirmed, the payslip %s is in "
+                                "%s state" % (rec.name, rec.state)))
+            elif new_state == 'cancel' and rec.state == 'cancel':
+                raise Warning(_("The payslip %s is already canceled "
+                                "please deselect it" % rec.name))
 
         for rec in records:
             if new_state == 'draft' and rec.state == 'cancel':
